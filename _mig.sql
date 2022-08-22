@@ -1,0 +1,18 @@
+USE TKCar_UAT
+
+:setvar dir_path "E:\Project_Folder\src\db_scripts"
+:r $(dir_path)"fn_calc_bills.sql"
+:r $(dir_path)"fn_calc_bonus.sql"
+:r $(dir_path)"sp_calc_salary.sql"
+:r $(dir_path)"sp_check_bills.sql"
+:r $(dir_path)"sp_generate_bill.sql"
+:r $(dir_path)"sp_get_worker_schedule.sql"
+:r $(dir_path)"sp_merge_customers.sql"
+:r $(dir_path)"sp_process_payment.sql"
+:r $(dir_path)"sp_recalc_bills__UNSAFE.sql"
+:r $(dir_path)"sp_recalc_bills.sql"
+:r $(dir_path)"sp_revert_payment.sql"
+:r $(dir_path)"sp_search_payment.sql"
+:r $(dir_path)"v_OverdueBill.sql"
+:r $(dir_path)"vrpt_LHS.sql"
+:r $(dir_path)"vrpt_MgtDistCount.sql"
