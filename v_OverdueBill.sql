@@ -1,4 +1,4 @@
--- VER 2024 Apr 23
+-- VER 2024 Apr 29
 
 ;DROP VIEW IF EXISTS OverdueBill
 GO
@@ -16,10 +16,10 @@ GO
         d_diff = DateDiff(Month, DateFromParts(ix_yrmo / 100, ix_yrmo % 100, 1), (SELECT tsmod FROM ix))
       , b.company, b.ix_yrmo, b.uid, b.cd_license, b.bill_type, b.create_dtm, b.amount, b.discount, b.bill_start, b.bill_end, b.due_dtm
       , cust_name = u.display_name, c.is_mobill, c.is_print_bill, c.is_rtn_envelope, c.balance
-      , is_whatsapp = IsNull((SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 1 /*whataspp*/), 0)
-      , is_email    = IsNull((SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 2 /*email   */), 0)
-      , is_mail     = IsNull((SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 3 /*mail    */), 0)
-      , is_fax      = IsNull((SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 4 /*fax     */), 0)
+      , is_whatsapp = CAST(CASE (SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 1 /*whataspp*/) WHEN 1 THEN 1 ELSE 0 END AS BIT)
+      , is_email    = CAST(CASE (SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 2 /*email   */) WHEN 1 THEN 1 ELSE 0 END AS BIT)
+      , is_mail     = CAST(CASE (SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 3 /*mail    */) WHEN 1 THEN 1 ELSE 0 END AS BIT)
+      , is_fax      = CAST(CASE (SELECT TOP 1 1 FROM Contact WHERE uid = u.id AND c_type = 4 /*fax     */) WHEN 1 THEN 1 ELSE 0 END AS BIT)
 -- @@ BillWhatsApp = 1, BillEmail = 2, BillAddress = 3, Tel = 10, Mobile = 11, Fax = 12, EMail = 13, Address = 20
     FROM Bill AS b
     JOIN TKUser AS u ON (b.uid = u.id)
